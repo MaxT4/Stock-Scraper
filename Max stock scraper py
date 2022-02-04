@@ -1,0 +1,37 @@
+import requests
+from bs4 import BeautifulSoup
+# main theme: Get stock tickers from the website 
+# remember, step 1 is get me the page and then step 2 is get me a way 
+# to access the content on the page, step 3: get me the stock tickers
+# step 4: get me the prices associated with those stock tickers
+r = requests.get("https://www.fool.com/investing/top-stocks-to-buy.aspx") 
+soup = BeautifulSoup(r.content, 'html.parser')
+stocks = soup.find(class_ = 'related-tickers' ) 
+stock_picks = stocks.find_all(class_ ='ticker-text-wrap' ) 
+
+
+#ticker = soup.find_all(class_ = "symbol")
+#convert_ticker = ticker.get_text()
+
+#.related-tickers.ticker-row a {
+
+for stock in stock_picks:
+	if stock.aside is None:
+		continue 
+	price = stock.aside.h4.get_text()
+
+	stockDict = {stocks : price}
+
+	
+#convert_ticker = tuple(ticker)
+#stock_dict = { convert_ticker: price }
+	
+    # Create a dictionary of stock tickers(name) to stock price 
+    # find and print the highest and lowest stocks
+    # print out the average stock price
+	print(stockDict)
+
+
+
+
+
